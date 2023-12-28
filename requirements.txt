@@ -1,1 +1,1 @@
-bin-wrapper~=1.0.1
+bin-wrapper~=1.0.3

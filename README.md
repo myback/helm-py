@@ -1,7 +1,12 @@
-# helm-py
+# helm-wrap
+
+Python wrapper for Helm binary
 
 ### Usage
 ```py
-h = Helm(o='json')
-h.list()
+from helm_wrap import helm
+
+h = helm.Helm(o='json')
+lst = h.list()
+print(lst.json)
 ```

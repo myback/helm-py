@@ -1,14 +1,16 @@
+from wrapper import CompletedProcess
+
 class _HelmDependency:
     def build(
             self,
             keyring: str = None,
             skip_refresh: bool = None,
             verify: bool = None
-    ):
+    ) -> CompletedProcess:
         """Rebuild the charts/ directory based on the Chart.lock file"""
         ...
 
-    def list(self, max_col_width: int = 80):
+    def list(self, max_col_width: int = 80) -> CompletedProcess:
         """List the dependencies for the given chart"""
         ...
 
@@ -17,7 +19,7 @@ class _HelmDependency:
             keyring: str = None,
             skip_refresh: bool = None,
             verify: bool = None
-    ):
+    ) -> CompletedProcess:
         """Update charts/ based on the contents of Chart.yaml"""
         ...
 
@@ -27,19 +29,19 @@ class _HelmGet:
             self,
             revision: int = None,
             template: str = None
-    ):
+    ) -> CompletedProcess:
         """Download all information for a named release"""
         ...
 
-    def hooks(self, revision: int = None):
+    def hooks(self, revision: int = None) -> CompletedProcess:
         """Download all hooks for a named release"""
         ...
 
-    def manifest(self, revision: int = None):
+    def manifest(self, revision: int = None) -> CompletedProcess:
         """Download the manifest for a named release"""
         ...
 
-    def notes(self, revision: int = None):
+    def notes(self, revision: int = None) -> CompletedProcess:
         """Download the notes for a named release"""
         ...
 
@@ -48,25 +50,25 @@ class _HelmGet:
             all: bool = None,
             output: str = 'table',
             revision: int = None
-    ):
+    ) -> CompletedProcess:
         """Download the values file for a named release"""
         ...
 
 
 class _HelmPlugin:
-    def install(self):
+    def install(self) -> CompletedProcess:
         """Install one or more Helm plugins"""
         ...
 
-    def list(self):
+    def list(self) -> CompletedProcess:
         """List installed Helm plugins"""
         ...
 
-    def uninstall(self):
+    def uninstall(self) -> CompletedProcess:
         """Uninstall one or more Helm plugins"""
         ...
 
-    def update(self):
+    def update(self) -> CompletedProcess:
         """Update one or more Helm plugins"""
         ...
 
@@ -78,14 +80,14 @@ class _HelmRegistry:
             insecure: bool = None,
             password: str = None,
             username: str = None
-    ):
+    ) -> CompletedProcess:
         """Login to a registry"""
         ...
 
     def logout(
             self,
             host: str
-    ):
+    ) -> CompletedProcess:
         """Logout from a registry"""
         ...
 
@@ -104,19 +106,19 @@ class _HelmRepo:
             pass_credentials: bool = None,
             password: str = None,
             username: str = None,
-    ):
+    ) -> CompletedProcess:
         """Add a chart repository"""
         ...
 
-    def index(self, merge: str = None, url: str = None):
+    def index(self, merge: str = None, url: str = None) -> CompletedProcess:
         """Generate an index file given a directory containing packaged charts"""
         ...
 
-    def list(self, output: str = 'table'):
+    def list(self, output: str = 'table') -> CompletedProcess:
         """List chart repositories"""
         ...
 
-    def remove(self, *repo: str):
+    def remove(self, *repo: str) -> CompletedProcess:
         """Remove one or more chart repositories"""
         ...
 
@@ -124,7 +126,7 @@ class _HelmRepo:
             self,
             *repo: str,
             fail_on_repo_update_fail: bool = None
-    ):
+    ) -> CompletedProcess:
         """Update information of available charts locally from chart repositories"""
         ...
 
@@ -137,7 +139,7 @@ class _HelmSearch:
             list_repo_url: str = None,
             max_col_width: int = 50,
             output: str = 'table'
-    ):
+    ) -> CompletedProcess:
         """Search for charts in the Artifact Hub or your own hub instance"""
         ...
 
@@ -150,7 +152,7 @@ class _HelmSearch:
             regexp: str = None,
             version: str = None,
             versions: str = None
-    ):
+    ) -> CompletedProcess:
         """Search repositories for a keyword in charts"""
         ...
 
@@ -171,7 +173,7 @@ class _HelmShow:
             username: str = None,
             verify: bool = None,
             version: str = None
-    ):
+    ) -> CompletedProcess:
         """Show all information of the chart"""
         ...
 
@@ -190,7 +192,7 @@ class _HelmShow:
             username: str = None,
             verify: bool = None,
             version: str = None
-    ):
+    ) -> CompletedProcess:
         """Show the chart's definition"""
         ...
 
@@ -209,7 +211,7 @@ class _HelmShow:
             username: str = None,
             verify: bool = None,
             version: str = None
-    ):
+    ) -> CompletedProcess:
         """Show the chart's CRDs"""
         ...
 
@@ -228,7 +230,7 @@ class _HelmShow:
             username: str = None,
             verify: bool = None,
             version: str = None
-    ):
+    ) -> CompletedProcess:
         """Show the chart's README"""
         ...
 
@@ -247,7 +249,7 @@ class _HelmShow:
             username: str = None,
             verify: bool = None,
             version: str = None
-    ):
+    ) -> CompletedProcess:
         """Show the chart's values"""
         ...
 
@@ -276,7 +278,7 @@ class Helm:
         """Manage a chart's dependencies"""
         ...
 
-    def env(self):
+    def env(self) -> CompletedProcess:
         """Helm client environment information"""
         ...
 
@@ -285,13 +287,14 @@ class Helm:
         """Download extended information of a named release"""
         ...
 
-    def history(self, max: int = 256, output: str = 'table'):
+    def history(self, max: int = 256, output: str = 'table') -> CompletedProcess:
         """Fetch release history"""
         ...
 
     def install(
             self,
-            *values: str,
+            release: str,
+            chart: str,
             atomic: bool = None,
             ca_file: str = None,
             cert_file: str = None,
@@ -315,31 +318,32 @@ class Helm:
             render_subchart_notes: bool = None,
             replace: bool = None,
             repo: str = None,
-            set: str = None,
-            set_file: str = None,
-            set_string: str = None,
+            set: list[str] = None,
+            set_file: list[str] = None,
+            set_string: list[str] = None,
             skip_crds: bool = None,
             timeout: str = None,
             username: str = None,
+            values: list = None,
             verify: bool = None,
             version: str = None,
             wait: bool = None,
             wait_for_jobs: bool = None
-    ):
+    ) -> CompletedProcess:
         """Install a chart"""
         ...
 
     def lint(
             self,
             path: str,
-            *values: str,
             quiet: bool = None,
-            set: str = None,
-            set_file: str = None,
-            set_string: str = None,
+            set: list[str] = None,
+            set_file: list[str] = None,
+            set_string: list[str] = None,
             strict: bool = None,
+            values: list[str] = None,
             with_subcharts: bool = None
-    ):
+    ) -> CompletedProcess:
         """Examine a chart for possible issues"""
         ...
 
@@ -362,7 +366,7 @@ class Helm:
             time_format: str = None,
             uninstalled: bool = None,
             uninstalling: bool = None
-    ):
+    ) -> CompletedProcess:
         """List releases"""
         ...
 
@@ -376,7 +380,7 @@ class Helm:
             passphrase_file: str = None,
             sign: str = None,
             version: str = None
-    ):
+    ) -> CompletedProcess:
         """Package a chart directory into a chart archive"""
         ...
 
@@ -403,11 +407,11 @@ class Helm:
             username: str = None,
             verify: bool = None,
             version: str = None,
-    ):
+    ) -> CompletedProcess:
         """Download a chart from a repository and (optionally) unpack it in local directory"""
         ...
 
-    def push(self):
+    def push(self) -> CompletedProcess:
         """Push a chart to remote"""
         ...
 
@@ -434,7 +438,7 @@ class Helm:
             timeout: str = None,
             wait: bool = None,
             wait_for_jobs: bool = None
-    ):
+    ) -> CompletedProcess:
         """Roll back a release to a previous revision"""
         ...
 
@@ -454,13 +458,14 @@ class Helm:
             output: str = 'table',
             revision: int = None,
             show_desc: bool = None
-    ):
+    ) -> CompletedProcess:
         """Display the status of the named release"""
         ...
 
     def template(
             self,
-            *values: str,
+            release: str,
+            chart: str,
             api_versions: str = None,
             atomic: bool = None,
             ca_file: str = None,
@@ -488,20 +493,21 @@ class Helm:
             render_subchart_notes: bool = None,
             replace: bool = None,
             repo: str = None,
-            set: str = None,
-            set_file: str = None,
-            set_string: str = None,
-            show_only: str = None,
+            set: list[str] = None,
+            set_file: list[str] = None,
+            set_string: list[str] = None,
+            show_only: list[str] = None,
             skip_crds: bool = None,
             skip_tests: bool = None,
             timeout: str = None,
             username: str = None,
             validate: bool = None,
+            values: list = None,
             verify: bool = None,
             version: str = None,
             wait: bool = None,
             wait_for_jobs: bool = None
-    ):
+    ) -> CompletedProcess:
         """Locally render templates"""
         ...
 
@@ -511,7 +517,7 @@ class Helm:
             filter: str = None,
             logs: bool = None,
             timeout: str = None
-    ):
+    ) -> CompletedProcess:
         """Run tests for a release"""
         ...
 
@@ -524,13 +530,14 @@ class Helm:
             no_hooks: bool = None,
             timeout: str = None,
             wait: bool = None
-    ):
+    ) -> CompletedProcess:
         """Uninstall a release"""
         ...
 
     def upgrade(
             self,
-            *values: str,
+            release: str,
+            chart: str,
             atomic: bool = None,
             ca_file: str = None,
             cert_file: str = None,
@@ -556,17 +563,18 @@ class Helm:
             render_subchart_notes: bool = None,
             replace: bool = None,
             repo: str = None,
-            set: str = None,
-            set_file: str = None,
-            set_string: str = None,
+            set: list[str] = None,
+            set_file: list[str] = None,
+            set_string: list[str] = None,
             skip_crds: bool = None,
             timeout: str = None,
             username: str = None,
+            values: list = None,
             verify: bool = None,
             version: str = None,
             wait: bool = None,
             wait_for_jobs: bool = None
-    ):
+    ) -> CompletedProcess:
         """Upgrade a release"""
         ...
 
@@ -574,10 +582,10 @@ class Helm:
             self,
             path: str,
             keyring: str = None
-    ):
+    ) -> CompletedProcess:
         """Verify that a chart at the given path has been signed and is valid"""
         ...
 
-    def version(self):
+    def version(self) -> CompletedProcess:
         """Print the client version information"""
         ...

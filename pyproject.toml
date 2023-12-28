@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "helm-wrap"
+version = "1.0.1"
+license = {file = "LICENSE"}
+authors = [
+    { name="myback", email="54638513+myback@users.noreply.github.com" },
+]
+description = "Python wrapper for Helm binary"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.urls]
+"Homepage" = "https://github.com/myback/helm-py"
+"Bug Tracker" = "https://github.com/myback/helm-py/issues"
+
+[tool.setuptools.packages.find]
+where=["src"]
